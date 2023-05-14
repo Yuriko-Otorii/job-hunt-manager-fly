@@ -1,0 +1,129 @@
+<%- include("partials/_header") -%>
+<div class="container mx-auto px-4 sm:px-8">
+  <a href="/home"><i class="fa-solid fa-arrow-left mr-2 mt-8"></i>Back to List</a>
+  <div class="py-5">
+    <div class="flex justify-between items-center">
+      <div class="flex items-baseline  header-left">
+        <span class="mr-1">Status: </span>
+        <% if(detailInfo.status === "noResponse"){ %>
+          <span
+          class="relative inline-block px-3 py-1 font-semibold text-purple-900 leading-tight"
+        >
+          <span
+            aria-hidden
+            class="absolute inset-0 bg-purple-200 opacity-50 rounded-full"
+          ></span>
+          <span class="relative">No response</span>
+        </span>
+        <% }else if(detailInfo.status === "onProcess"){ %>
+          <span
+            class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight"
+          >
+            <span
+              aria-hidden
+              class="absolute inset-0 bg-green-200 opacity-50 rounded-full"
+            ></span>
+            <span class="relative">On process</span>
+          </span>
+        <% }else if(detailInfo.status === "offered"){ %>
+          <span
+            class="relative inline-block px-3 py-1 font-semibold text-orange-900 leading-tight"
+          >
+            <span
+              aria-hidden
+              class="absolute inset-0 bg-orange-200 opacity-50 rounded-full"
+            ></span>
+            <span class="relative">Offered</span>
+          </span>
+        <% }else if(detailInfo.status === "declined"){ %>
+          <span
+            class="relative inline-block px-3 py-1 font-semibold text-gray-900 leading-tight"
+          >
+            <span
+              aria-hidden
+              class="absolute inset-0 bg-gray-200 opacity-50 rounded-full"
+            ></span>
+            <span class="relative">Declined</span>
+          </span>
+        <% } %>
+      </div>
+      <div class="flex">
+        <a href="/home/<%= detailInfo.list_id %>/edit">
+          <button class="rounded-lg px-4 py-2 mr-3 border-2 border-blue-500 text-blue-500 hover:bg-blue-600 hover:text-blue-100 duration-300">Edit</button>
+        </a>
+        <form onSubmit="return deleteConfirm()" action="/home/<%= detailInfo.list_id %>/delete?_method=DELETE" method="POST">
+          <button type="submit" class="rounded-lg px-4 py-2 border-2 border-red-600 text-red-600 hover:bg-red-600 hover:text-red-100 duration-300">Delete</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="flex justify-between gap-3">
+      <div class="p-6 rounded-lg shadow-lg w-96 h-fit my-5 bg-blue-100">
+        <h2 class="text-2xl font-bold mb-4 text-gray-800 underline underline-offset-4 decoration-1 decoration-gray-400">Information</h2>
+        <div>
+          <i class="fa-solid fa-house mr-2"></i>
+          <span class="text-xl font-bold"><%= detailInfo.company_name %></span>
+        </div>
+        <div class="flex flex-col mt-3">
+          <div>
+            <i class="fa-solid fa-map-location-dot mr-2"></i><span><%= detailInfo.location %></span>
+          </div>
+          <div>
+            <i class="fa-solid fa-envelope mr-2"></i><span><%= detailInfo.company_email %></span>
+          </div>
+          <div>
+            <i class="fa-solid fa-phone mr-2"></i><span><%= detailInfo.company_phone %></span>
+          </div>
+          <div>
+            <i class="fa-solid fa-arrow-pointer mx-1 mr-3"></i><a break-words href="http://<%= detailInfo.company_website %>" target="_blank" class="text-blue-500 hover:text-blue-800 hover:underline hover:underline-offset-4" ><%= detailInfo.company_website %></a>
+          </div>
+        </div>
+        <div class="mt-6">
+          <div class="my-2 flex items-baseline">
+            <p class="text-md font-semibold w-28" >Date applied: </p>
+            <p><%= detailInfo.date_applied %></p>
+          </div>
+          <div class="my-2 flex items-baseline">
+            <p class="text-md font-semibold w-28">Position: </p>
+            <p break-words><%= detailInfo.position %></p>
+          </div>
+          <div class="my-2 flex items-baseline">
+            <p class="text-md font-semibold w-28">Job type: </p>
+            <p break-words><%= detailInfo.job_type %></p>
+          </div>
+        </div>
+      </div>
+      <div class="p-6 rounded-lg shadow-lg w-96 h-fit my-5 bg-blue-100">
+        <h2 class="text-2xl font-bold mb-4 text-gray-800 underline underline-offset-4 decoration-1 decoration-gray-400">Next</h2>
+        <ul class="list-disc pl-6">
+          <% if(detailInfo.next.next[0] !== "" | detailInfo.next.next[0] === null){ %>
+            <% detailInfo.next.next.forEach(item => { %>
+              <li break-words class="text-gray-700"><%= item %></li><br>
+            <% }) %>
+          <% } %>
+        </ul>
+      </div>
+      <div class="p-6 rounded-lg shadow-lg w-96 h-fit my-5 bg-blue-100">
+        <h2 class="text-2xl font-bold mb-4 text-gray-800 underline underline-offset-4 decoration-1 decoration-gray-400">Notes</h2>
+        <ul class="list-disc pl-6">
+          <% if(detailInfo.notes.notes[0] !== ""){ %>
+            <% detailInfo.notes.notes.forEach(item => { %>
+              <li break-words class="text-gray-700"><%= item %></li><br>
+            <% }) %>
+          <% } %>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  const deleteConfirm = () => {
+    const result = window.confirm("Would you like to delete this list permanently?")
+    if(result){
+      window.location.href('/home/<%= detailInfo.list_id %>/delete?_method=DELETE')  
+    }else{
+      return false
+    }
+  }
+</script>
+<%- include("partials/_footer") -%>

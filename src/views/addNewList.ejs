@@ -1,0 +1,181 @@
+<%- include("partials/_header") -%>
+<div class="container mx-auto px-8 sm:px-8">
+  <button type="button" onclick="pageBackConfirm()"
+    ><i class="fa-solid fa-arrow-left mr-2 mt-8"></i>Back to home</button
+  >
+  <form action="/home/createlist" Method="POST" class="w-full">
+    <div class="py-5">
+      <div class="flex justify-between items-center">
+          <div class="flex items-baseline header-left">
+              <span class="mr-2">Status: </span>
+              <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"></label>
+              <select id="countries" name="status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                  <option disabled selected value="">Choose a status</option>
+                  <option value="noResponse">No response</option>
+                  <option value="onProcess">On process</option>
+                  <option value="offered">Offered</option>
+                  <option value="declined">Declined</option>
+              </select>
+          </div>
+          <button type="submit" class="animate-bounce rounded-lg px-4 py-2 bg-blue-500 text-white hover:bg-blue-600 duration-300">Save New List</button>
+      </div>
+
+      <div class="flex justify-center gap-3">
+        <div class="p-6 rounded-lg shadow-lg w-full h-fit my-5 bg-blue-100">
+          <h2
+            class="text-2xl font-bold mb-4 text-gray-800 underline underline-offset-4 decoration-1 decoration-gray-400"
+          >
+            Information
+          </h2>
+          
+          <div class="flex flex-col">
+            <div class="group relative w-full">
+              <label for="companyName" class="block pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400">Company name</label>
+              <input maxlength="50" id="companyName" name="companyName" type="text" class="peer h-10 w-full rounded-md bg-gray-50 px-4 mb-2 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400" required/>
+            </div>
+            <div class="group relative w-full">
+              <label for="location" class="block pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400">Location</label>
+              <input maxlength="50" id="location" name="location" type="text" class="peer h-10 w-full rounded-md bg-gray-50 px-4 mb-2 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400" />
+            </div>
+            <div class="group relative w-full">
+              <label for="companyEmail" class="block pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400">Company e-mail</label>
+              <input maxlength="50" id="companyEmail" name="companyEmail" type="text" class="peer h-10 w-full rounded-md bg-gray-50 px-4 mb-2 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"/>
+            </div>
+            <div class="group relative w-full">
+              <label for="companyPhone" class="block pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400">Company phone</label>
+              <input maxlength="50" id="companyPhone" name="companyPhone" type="text" class="peer h-10 w-full rounded-md bg-gray-50 px-4 mb-2 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400" />
+            </div>
+            <div class="group relative w-full">
+              <label for="companyWebsite" class="block pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400">Website</label>
+              <input maxlength="100" id="companyWebsite" name="companyWebsite" type="text" class="peer h-10 w-full rounded-md bg-gray-50 px-4 mb-2 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400" />
+            </div>
+          </div>
+          <div class="mt-6">
+            <div class="group relative w-full">
+              <label for="dateApplied" class="block pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400">Date applied</label>
+              <input datepicker datepicker-autohide datepicker-format="dd M yyyy" id="dateApplied" name="dateApplied" type="text" class="peer h-10 w-full rounded-md bg-gray-50 px-4 mb-2 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400" required/>
+            </div>
+            <div class="group relative w-full">
+              <label for="jobType" class="block pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400">job type</label>
+              <input maxlength="50" id="jobType" name="jobType" type="text" class="peer h-10 w-full rounded-md bg-gray-50 px-4 mb-2 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400" required/>
+            </div>
+            <div class="group relative w-full">
+              <label for="position" class="block pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400">Position</label>
+              <input maxlength="50" id="position" name="position" type="text" class="peer h-10 w-full rounded-md bg-gray-50 px-4 mb-2 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400" required/>
+            </div>
+          </div>
+        </div>
+        <div class="p-6 rounded-lg shadow-lg w-full h-fit my-5 bg-blue-100">
+          <h2
+            class="text-2xl font-bold mb-10 text-gray-800 underline underline-offset-4 decoration-1 decoration-gray-400"
+          >
+            Next
+          </h2>
+          <div class="nextInputGroup">
+            <div class="group relative w-full" id="nextRow">
+              <div class="flex items-baseline">
+                <input id="next" name="next" type="text" placeholder="Enter next tasks" class="peer h-10 w-full rounded-md bg-gray-50 px-4 mb-2 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400" />
+                <button type="button" onclick="deleteRow()"><i class="fa-solid fa-delete-left ml-2"></i></button>
+              </div>
+            </div>
+          </div>
+          <button type="button" onclick="addNextRow()" class="rounded-lg px-3 py-1 border mt-2 border-gray-600 text-gray-600 hover:bg-gray-600 hover:text-gray-100 duration-300 rounded-full"><i class="fa-solid fa-plus mr-2"></i>Add a row</button>
+        </div>
+        <div class="p-6 rounded-lg shadow-lg w-full h-fit my-5 bg-blue-100">
+          <h2
+            class="text-2xl font-bold mb-10 text-gray-800 underline underline-offset-4 decoration-1 decoration-gray-400"
+          >
+            Notes
+          </h2>
+          <div class="notesInputGroup">
+            <div class="group relative w-full" id="notesRow">
+              <div class="flex items-baseline">
+                <input id="notes" name="notes" type="text" placeholder="Enter Notes" class="peer h-10 w-full rounded-md bg-gray-50 px-4 mb-2 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400" />
+                <button type="button" onclick="deleteRow()"> <i class="fa-solid fa-delete-left ml-2"></i></button>
+              </div>
+            </div>
+          </div>
+          <button type="button" onclick="addNotesRow()" class="submitBtn rounded-lg px-3 py-1 border mt-2 border-gray-600 text-gray-600 hover:bg-gray-600 hover:text-gray-100 duration-300 rounded-full"><i class="fa-solid fa-plus mr-2"></i>Add a row</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<script>
+  const addNextRow = () => {
+    const nextInputGroup = document.querySelector('.nextInputGroup')
+    const newNextInput = document.createElement('div')
+    newNextInput.innerHTML = `
+      <div class="group relative w-full" id="nextRow">
+        <div class="flex items-baseline">
+          <input id="next" name="next" type="text" class="peer h-10 w-full rounded-md bg-gray-50 px-4 mb-2 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400" />
+          <button type="button" onclick="deleteRow()"> <i class="fa-solid fa-delete-left ml-2"></i></button>
+        </div>
+      </div>
+    `
+    nextInputGroup.appendChild(newNextInput)
+  }
+  
+  const addNotesRow = () => {
+    const notesInputGroup = document.querySelector('.notesInputGroup')
+    const newNotesInput = document.createElement('div')
+    newNotesInput.innerHTML = `
+      <div class="group relative w-full" id="notesRow">
+        <div class="flex items-baseline">
+          <input id="notes" name="notes" type="text" class="peer h-10 w-full rounded-md bg-gray-50 px-4 mb-2 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400" />
+          <button type="button" onclick="deleteRow()"> <i class="fa-solid fa-delete-left ml-2"></i></button>
+        </div>
+      </div>
+    `
+    notesInputGroup.appendChild(newNotesInput)
+  }
+
+  const deleteRow = () => {
+    const target = event.target.parentElement.parentElement
+    target.remove()
+  }
+
+  const pageBackConfirm = () => {
+    const result = window.confirm("Would you like to back to home? (Changes will be discarded.)")
+    if(result){
+      window.location.href = '/home'  
+    }else{
+      return false
+    }
+  }
+
+  const allInputs = document.querySelectorAll("input")
+  const submitBtn = document.querySelector(".submitBtn")
+  let checkValue = false
+  const pageMoveAlert = (e) => {
+    const messsage = "Would you like to back to home? (Changes will be discarded.)"
+    e.returnValue = message
+  }
+
+  window.onbeforeunload = pageMoveAlert
+  // window.addEventListener('beforeunload', pageMoveAlert)
+
+  const displayAlert = () => {
+    if(!checkValue){
+      window.addEventListener('beforeunload', pageMoveAlert)
+      for(let i = 0; i < allInputs.length; i++){
+        allInputs[i].removeEventListener('input', displayAlert)
+        allInputs[i].removeEventListener('change', displayAlert)
+      }
+      checkValue = true     
+    }
+  }
+
+  for(let i = 0; i < allInputs.length; i++){
+    allInputs[i].addEventListener('input', displayAlert)
+    allInputs[i].addEventListener('change', displayAlert)
+  }
+
+  submitBtn.addEventListener('click', () => {
+    window.removeEventListener('beforeunload', pageMoveAlert)
+  })  
+
+</script>
+
+<%- include("partials/_footer") -%>

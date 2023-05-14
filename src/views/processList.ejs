@@ -1,0 +1,289 @@
+<%- include("partials/_header") -%>
+<div class="container mx-auto px-4 sm:px-8">
+  <div class="py-8">
+    <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+      <div class="mb-4 flex justify-between">
+        <div>
+          <i class="fa-solid fa-filter mr-3 fa-lg"></i>
+          <button type="button" onclick="getAllColumn()" class="group inline-flex items-center px-4 py-2 mb-2 mb-2 text-sm font-medium text-center border border-blue-500 text-blue-500 bg-white rounded-full focus:ring-4 focus:outline-none focus:ring-blue-300 hover:bg-blue-500 hover:text-white">
+            All
+            <span class="inline-flex items-center justify-center w-4 h-4 ml-2 text-md font-semibold text-blue-500 group-hover:text-white">
+              <%= list.length %>
+            </span>
+          </button>
+          <button type="button" onclick="handleFilter('On process')" class="group inline-flex items-center px-4 py-2 mb-2 text-sm font-medium text-center border border-green-500 text-green-500 bg-white rounded-full focus:ring-4 focus:outline-none focus:ring-green-300 hover:bg-green-500 hover:text-white">
+            On process
+            <span class="inline-flex items-center justify-center w-4 h-4 ml-2 text-md font-semibold text-green-500 group-hover:text-white">
+              <%= list.filter(item => item.status === "onProcess").length %>
+            </span>
+          </button>
+          <button type="button" onclick="handleFilter('No response')" class="group inline-flex items-center px-4 py-2 mb-2 text-sm font-medium text-center border border-purple-300 text-purple-300 bg-white rounded-full focus:ring-4 focus:outline-none focus:ring-purple-300 hover:bg-purple-300 hover:text-white">
+            No response
+            <span class="inline-flex items-center justify-center w-4 h-4 ml-2 text-md font-semibold text-purple-300 group-hover:text-white">
+              <%= list.filter(item => item.status === "noResponse").length %>
+            </span>
+          </button>
+          <button type="button" onclick="handleFilter('Offered')" class="group inline-flex items-center px-4 py-2 mb-2 text-sm font-medium text-center border border-orange-400 text-orange-400 bg-white rounded-full focus:ring-4 focus:outline-none focus:ring-orange-400 hover:bg-orange-400 hover:text-white">
+            Offered
+            <span class="inline-flex items-center justify-center w-4 h-4 ml-2 text-md font-semibold text-orange-400 group-hover:text-white">
+              <%= list.filter(item => item.status === "offered").length %>
+            </span>
+          </button>
+          <button type="button" onclick="handleFilter('Declined')" class="group inline-flex items-center px-4 py-2 mb-2 text-sm font-medium text-center border border-gray-500 text-gray-500 bg-white rounded-full focus:ring-4 focus:outline-none focus:ring-gray-300 hover:bg-gray-500 hover:text-white">
+            Declined
+            <span class="inline-flex items-center justify-center w-4 h-4 ml-2 text-md font-semibold text-gray-500 group-hover:text-white">
+              <%= list.filter(item => item.status === "declined").length %>
+            </span>
+          </button>
+          <button type="button" onclick="handleStarFilter()" class="group inline-flex items-center px-4 py-2.5 mb-2 text-sm font-medium text-center border border-yellow-300 text-yellow-300 bg-white rounded-full focus:ring-4 focus:outline-none focus:ring-yellow-300 hover:bg-yellow-300 hover:text-white">
+            <i class="fa-regular fa-star"></i>
+            <span class="inline-flex items-center justify-center w-4 h-4 ml-2 text-md font-semibold text-yellow-300 group-hover:text-white">
+              <%= list.filter(item => item.favorite === true).length %>
+            </span>
+          </button>
+        </div>
+        <div class="flex">
+          <a href="/home/newlist" class="mr-2">
+            <button class="rounded-lg px-4 py-2 bg-blue-500 text-white text-sm hover:bg-blue-600 duration-300">Add new list</button>
+          </a>
+          <a href="/home/mypage" class="mr-2">
+            <button class="rounded-lg px-4 py-1 mr-3 border border-blue-500 text-blue-500 hover:bg-blue-600 hover:text-blue-100 duration-300">My Page</button>
+          </a>
+        </div>
+        
+      </div>
+      <div class="inline-block min-w-full shadow-md rounded-lg">
+        <table class="min-w-full leading-normal">
+          <thead>
+            <tr>
+              <th
+                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+              >
+              </th>
+              <th
+                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+              >
+                Company
+              </th>
+              <th
+                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+              >
+                Position
+              </th>
+              <th
+                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+              >
+                Job type
+              </th>
+              <th
+                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+              >
+                Date applied
+              </th>
+              <th
+                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+              >
+                Next
+              </th>
+              <th
+                class="statusTh px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+              >
+                Status
+              </th>
+              <th
+                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+              >
+                Note
+              </th>
+              <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100">
+              </th>
+            </tr>
+          </thead>
+          <% if(list.length > 0){ %>
+            <tbody>
+              <% list.forEach((item) => { %>
+                <tr>
+                  <% if(item.favorite === false){ %>
+                    <td id="starRow" class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                      <form action="/home/favupdate?_method=PUT" method="POST">
+                        <button type="submit"><i class="fa-regular fa-star"></i></button>
+                        <input type="hidden" id="starValue" name="favorite" value="<%= item.favorite %>">
+                        <input type="hidden" name="list_id" value="<%= item.list_id %>">
+                      </form>
+                    </td>
+                  <% }else{ %>
+                    <td id="starRow" class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                      <form action="/home/favupdate?_method=PUT" method="POST">
+                        <button type="submit"><i class="fa-regular fa-star text-yellow-300"></i></button>
+                        <input type="hidden" id="starValue" name="favorite" value="<%= item.favorite %>">
+                        <input type="hidden" name="list_id" value="<%= item.list_id %>">
+                      </form>
+                    </td>
+                  <% } %>
+                  <td break-words class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-sm">
+                    <p><%= item.company_name %></p>
+                  </td>
+                  <td break-words class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-sm">
+                    <p><%= item.position %></p>
+                  </td>
+                  <td break-words class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-sm">
+                    <p><%= item.job_type %></p>
+                  </td>
+                  
+                  <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-sm"><%= item.date_applied %></td>
+                  <td break-words class="px-5 py-5 border-b border-gray-200 bg-white text-sm max-w-xs text-sm">
+                    <% item.next.next.forEach(eachNext => { %>
+                      <%= eachNext %><br>
+                    <% }) %>
+                  </td>
+                  <td id="status_td" class="whitespace-nowrap	px-5 py-5 border-b border-gray-200 bg-white text-sm text-sm">
+                    <% if(item.status === "noResponse"){ %>
+                      <span
+                      class="relative inline-block px-3 py-1 font-semibold text-purple-900 leading-tight"
+                    >
+                      <span
+                        aria-hidden
+                        class="absolute inset-0 bg-purple-200 opacity-50 rounded-full"
+                      ></span>
+                      <span class="relative">No response</span>
+                    </span>
+                    <% }else if(item.status === "onProcess"){ %>
+                      <span
+                        class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight"
+                      >
+                        <span
+                          aria-hidden
+                          class="absolute inset-0 bg-green-200 opacity-50 rounded-full"
+                        ></span>
+                        <span class="relative">On process</span>
+                      </span>
+                    <% }else if(item.status === "offered"){ %>
+                      <span
+                        class="relative inline-block px-3 py-1 font-semibold text-orange-900 leading-tight"
+                      >
+                        <span
+                          aria-hidden
+                          class="absolute inset-0 bg-orange-300 opacity-60 rounded-full"
+                        ></span>
+                        <span class="relative">Offered</span>
+                      </span>
+                    <% }else if(item.status === "declined"){ %>
+                      <span
+                        class="relative inline-block px-3 py-1 font-semibold text-gray-900 leading-tight"
+                      >
+                        <span
+                          aria-hidden
+                          class="absolute inset-0 bg-gray-200 opacity-50 rounded-full"
+                        ></span>
+                        <span class="relative">Declined</span>
+                      </span>
+                    <% } %>
+                  </td>
+                  <td break-words class="px-5 py-5 border-b border-gray-200 bg-white text-sm max-w-xs text-sm">
+                    <% item.notes.notes.forEach(eachNote => { %>
+                      <%= eachNote %><br>
+                    <% }) %>
+                  </td>
+                  <td
+                    class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-right text-sm"
+                  >
+                  <div class="group inline-block relative">
+                    <button
+                      type="button"
+                      id="dropdownHoverButton"
+                      data-dropdown-toggle="dropdownHover"
+                      class="inline-block text-gray-500 hover:text-gray-900 hover:bg-gray-100 hover:rounded-full"
+                    >
+                      <svg
+                        class="inline-block h-6 w-6 fill-current"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M12 6a2 2 0 110-4 2 2 0 010 4zm0 8a2 2 0 110-4 2 2 0 010 4zm-2 6a2 2 0 104 0 2 2 0 00-4 0z"
+                        />
+                      </svg>
+                    </button>
+                    <ul class="absolute -top-20 -left-20 z-100 hidden w-fit text-gray-700 pt-1 group-hover:block">
+                      <li>
+                        <a
+                          class="text-left rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-5 block whitespace-no-wrap"
+                          href="/home/<%= item.list_id %>"
+                          >Detail</a
+                        >
+                      </li>
+                      <li>
+                        <a
+                          class="text-left bg-gray-200 hover:bg-gray-400 py-2 px-5 block whitespace-no-wrap"
+                          href="/home/<%= item.list_id %>/edit"
+                          >Edit</a
+                        >
+                      </li>
+                      <li>
+                        <form onSubmit="return deleteConfirm('<%= item.list_id %>')" action="/home/<%= item.list_id %>/delete?_method=DELETE" method="POST">
+                          <button type="submit" class="text-left rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-5 block whitespace-no-wrap">Delete</button>
+                        </form>
+                      </li>
+                    </ul>
+                  </div>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          <% } %>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const table = document.querySelector("table")
+
+  const getAllColumn = () => {
+    for (let i = 1; i < table.rows.length; i++) {
+      const row = table.rows[i];
+      row.style.display = 'table-row';
+    }
+  }
+
+  const handleFilter = (target) => {
+    for (let i = 1; i < table.rows.length; i++) {
+      const row = table.rows[i];
+      row.style.display = 'none';
+
+      for (let j = 0; j < row.cells.length; j++) {
+        if (row.cells[j].textContent.match(target)) {
+          row.style.display = 'table-row';
+          break;
+        }
+      }
+    }
+  }
+  
+  const handleStarFilter = () => {
+    for (let i = 1; i < table.rows.length; i++) {
+      const row = table.rows[i];
+      row.style.display = 'none';
+
+      const starValue = row.querySelector("#starValue").value
+      for (let j = 0; j < row.cells.length; j++) {
+        if(starValue === "true"){
+          row.style.display = 'table-row';
+          break;
+        }
+      }
+    }
+  }
+
+  const deleteConfirm = (id) => {
+    const result = window.confirm("Would you like to delete this list permanently?")
+    if(result){
+      window.location.href(`/home/${id}/delete?_method=DELETE`)  
+    }else{
+      return false
+    }
+  }
+
+</script>
+
+<%- include("partials/_footer") -%>

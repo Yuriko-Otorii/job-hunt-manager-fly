@@ -1,0 +1,312 @@
+<%- include("partials/_header") -%>
+
+<div class="flex items-center relative h-full p-10">
+  <div
+    class="overlay absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_right,_var(--tw-gradient-stops))] from-sky-400 to-indigo-900 opacity-60"
+  ></div>
+  <div class="flex flex-col gap-3 fixed top-10 z-50">
+    <a href="/home" class="mr-2">
+      <button
+        class="rounded-lg w-24 py-2 bg-white font-bold text-gray-800 text-sm hover:bg-blue-600 hover:text-white duration-300 opacity-60 transition transform hover:-translate-y-0.5"
+      >
+        List Page
+      </button>
+    </a>
+    <a href="/home/mypage" class="mr-2">
+      <button
+        class="rounded-lg w-24 py-2 bg-white font-bold text-gray-800 text-sm hover:bg-blue-600 hover:text-white duration-300 opacity-60 transition transform hover:-translate-y-0.5"
+      >
+        My Page
+      </button>
+    </a>
+    <a href="/sharepage/create" class="mr-2">
+      <button
+        class="rounded-lg w-24 py-2 bg-white font-bold text-gray-800 text-sm hover:bg-blue-600 hover:text-white duration-300 opacity-60 transition transform hover:-translate-y-0.5"
+      >
+        Share status
+      </button>
+    </a>
+  </div>
+  <div class="container mx-auto relative z-10">
+    <div class="flex flex-col items-center justify-center gap-5">
+      <% allSharePosts.forEach(postItem => { %>
+      <div
+        class="relative z-50 box bg-white p-3 pt-10 w-fit md:px-5 md:pt-4 lg:px-5 border-t-10 border-solid border-indigo-600 rounded-lg opacity-80"
+      >
+        <div class="flex flex-col justify-between">
+          <div class="flex flex-col ml-5">
+            <div class="flex items-end">
+              <h1 class="font-bold text-xl mr-3"><%= postItem.username %></h1>
+              <div
+                class="ml-2 py-3 px-4 bg-gray-400 rounded-br-3xl rounded-tr-3xl rounded-tl-xl text-white"
+              >
+                <%= postItem.post_message %>
+              </div>
+            </div>
+            <table
+              class="my-2 mr-4 px-5 w-fit border border-gray-600 rounded-lg border-separate"
+            >
+              <thead>
+                <tr>
+                  <th class="py-3"></th>
+                  <th class="py-3"><p class="text-gray-500">Applied</p></th>
+                  <th class="py-3"><p class="text-gray-500">On process</p></th>
+                  <th class="py-3"><p class="text-gray-500">No respomse</p></th>
+                  <th class="py-3"><p class="text-gray-500">Offered</p></th>
+                  <th class="py-3"><p class="text-gray-500">Declined</p></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="pl-5 py-3">
+                    <p class="text-lg w-20 font-bold">Total:</p>
+                  </td>
+                  <td class="py-3">
+                    <p class="font-bold text-gray-700 text-xl text-center">
+                      <%= postItem.total_applied %>
+                    </p>
+                  </td>
+                  <td class="py-3">
+                    <p class="font-bold text-gray-700 text-xl text-center">
+                      <%= postItem.total_onprocess %>
+                    </p>
+                  </td>
+                  <td class="py-3">
+                    <p class="font-bold text-gray-700 text-xl text-center">
+                      <%= postItem.total_noresponse %>
+                    </p>
+                  </td>
+                  <td class="py-3">
+                    <p class="font-bold text-gray-700 text-xl text-center">
+                      <%= postItem.total_offered %>
+                    </p>
+                  </td>
+                  <td class="py-3">
+                    <p class="font-bold text-gray-700 text-xl text-center">
+                      <%= postItem.total_declined %>
+                    </p>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="pl-5 py-3">
+                    <p class="text-lg w-20 font-bold">Today:</p>
+                  </td>
+                  <td class="py-3">
+                    <p class="font-bold text-gray-700 text-xl text-center">
+                      <%= postItem.today_applied %>
+                    </p>
+                  </td>
+                  <td class="py-3">
+                    <p class="font-bold text-gray-700 text-xl text-center">
+                      <%= postItem.today_onprocess %>
+                    </p>
+                  </td>
+                  <td class="py-3">
+                    <p class="font-bold text-gray-700 text-xl text-center">
+                      <%= postItem.today_noresponse %>
+                    </p>
+                  </td>
+                  <td class="py-3">
+                    <p class="font-bold text-gray-700 text-xl text-center">
+                      <%= postItem.today_offered %>
+                    </p>
+                  </td>
+                  <td class="py-3">
+                    <p class="font-bold text-gray-700 text-xl text-center">
+                      <%= postItem.today_declined %>
+                    </p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="mb-4 text-gray-700 text-sm">Post: <%= postItem.post_create_date %></p>
+          </div>
+          <div class="flex items-center justify-between ml-5 pr-5 w-full">
+            <div class="flex items-center">
+              <form action="/sharepage/likepost" method="POST">
+                <% if(postItem.likeStatus){ %>
+                <div class="flex transition transform hover:-translate-y-0.5">
+                  <button type="submit">
+                    <div
+                      class="text-gray-500 p-2 pb-3 text-orange-500 rounded-full"
+                    >
+                      <i class="fa-solid fa-thumbs-up fa-xl"></i>
+                      <input
+                        type="hidden"
+                        name="post_id"
+                        value="<%= postItem.post_id %>"
+                      />
+                      <input
+                        type="hidden"
+                        name="likeStatus"
+                        value="<%= postItem.likeStatus %>"
+                      />
+                    </div>
+                  </button>
+                  <div class="flex justify-center items-center">
+                    <p class="font-bold text-lg text-gray-600">
+                      <%= postItem.allLikes.length %>
+                    </p>
+                  </div>
+                </div>
+                <% }else{ %>
+                <div class="flex transition transform hover:-translate-y-0.5">
+                  <button type="submit">
+                    <div
+                      class="text-gray-500 p-2 pb-3 rounded-full hover:text-gray-800"
+                    >
+                      <i class="fa-solid fa-thumbs-up fa-xl"></i>
+                      <input
+                        type="hidden"
+                        name="post_id"
+                        value="<%= postItem.post_id %>"
+                      />
+                      <input
+                        type="hidden"
+                        name="likeStatus"
+                        value="<%= postItem.likeStatus %>"
+                      />
+                    </div>
+                  </button>
+                  <div class="flex justify-center items-center">
+                    <p class="font-bold text-lg text-gray-600">
+                      <%= postItem.allLikes.length %>
+                    </p>
+                  </div>
+                </div>
+                <% } %>
+              </form>
+              <div
+                onclick="commentDisplay('<%= postItem.post_id %>')"
+                class="commentDisplayBtn flex justify-center items-center p-2 text-gray-500 ml-2 transition transform hover:-translate-y-0.5 hover:text-gray-800"
+              >
+                <i class="fa-solid fa-comment fa-xl"></i>
+                <p class="font-bold text-lg text-gray-600 pl-2">
+                  <%= postItem.comment.length %>
+                </p>
+              </div>
+            </div>
+            <% if(postItem.post_user_id === loginUserId){ %>
+            <div class="group inline-block relative">
+              <button
+                type="button"
+                id="dropdownHoverButton"
+                data-dropdown-toggle="dropdownHover"
+                class="inline-block text-gray-500 hover:text-gray-900 hover:bg-gray-100 hover:rounded-full"
+              >
+                <svg
+                  class="z-50 inline-block h-6 w-6 fill-current"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M12 6a2 2 0 110-4 2 2 0 010 4zm0 8a2 2 0 110-4 2 2 0 010 4zm-2 6a2 2 0 104 0 2 2 0 00-4 0z"
+                  />
+                </svg>
+              </button>
+              <ul
+                class="absolute -top-14 -left-24 z-50 hidden w-fit text-gray-700 pt-1 group-hover:block"
+              >
+                <li>
+                  <a
+                    class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-7 block whitespace-no-wrap"
+                    href="/sharepage/<%= postItem.post_id %>/edit"
+                    >Edit</a
+                  >
+                </li>
+                <li>
+                  <form
+                    onSubmit="return postDeleteConfirm('<%= postItem.post_id %>')"
+                    action="/sharepage/<%= postItem.post_id %>/delete?_method=DELETE"
+                    method="POST"
+                  >
+                    <button
+                      type="submit"
+                      class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-7 block whitespace-no-wrap"
+                    >
+                      Delete
+                    </button>
+                  </form>
+                </li>
+              </ul>
+            </div>
+            <% }else{ %>
+            <div></div>
+            <% } %>
+          </div>
+        </div>
+        <div class="commentSection<%= postItem.post_id %> hidden">
+          <form action="/sharepage/postcomment" method="POST" class="w-full">
+            <div class="flex items-center w-full my-4 mx-5">
+              <input type="text" name="comment" placeholder="Write comment...." class="rounded-lg p-1 border border-gray-600 w-full mr-2">
+              <input type="hidden" name="comment_post_id" value="<%= postItem.post_id %>">
+              <button type="submit" class="mr-10 submitBtn text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center">Send</button>
+            </div>
+          </form>
+          <div class="flex flex-col">
+            <% if(Array.isArray(postItem.comment)){ %>
+              <% postItem.comment.forEach((eachComment) => { %>
+              <div class="flex flex-col border border-gray-600 rounded-lg p-4 mx-5 text-gray-700 mb-3">
+                <p><%= eachComment.username %></p>
+                <p class="text-xl mb-4"><%= eachComment.comment %></p>
+                <div class="flex justify-between items-baseline w-full">
+                  <p class="text-sm">Post: <%= eachComment.comment_date %></p>  
+                  <% if(eachComment.comment_user_id === loginUserId){ %>
+                    <form
+                      onSubmit="return commentDeleteConfirm('<%= eachComment.comment_id %>')"
+                      action="/sharepage/postcomment/delete?_method=DELETE"
+                      method="POST"
+                    >
+                      <input type="hidden" name="comment_id" value="<%= eachComment.comment_id %>">
+                      <input type="hidden" name="comment_user_id" value="<%= eachComment.comment_user_id %>">
+                      <button
+                        type="submit"
+                        class="rounded-lg bg-gray-200 hover:bg-gray-400 py-2 px-2 block whitespace-no-wrap"
+                      >
+                        Delete
+                      </button>
+                    </form>
+                  <% }else{ %>
+                    <div></div>
+                  <% } %>
+                </div>
+              </div>
+              <% }) %>
+            <% } %>
+          </div>
+        </div>
+      </div>
+      <% }) %>
+    </div>
+  </div>
+</div>
+
+<script>
+  const postDeleteConfirm = (id) => {
+    const result = window.confirm(
+      "Would you like to delete this post permanently?"
+    );
+    if (result) {
+      window.location.href("/sharepage/id/delete?_method=DELETE");
+    } else {
+      return false;
+    }
+  };
+  
+  const commentDeleteConfirm = (id) => {
+    const result = window.confirm(
+      "Would you like to delete this comment permanently?"
+    );
+    if (result) {
+      window.location.href("/sharepage/postcomment/delete?_method=DELETE");
+    } else {
+      return false;
+    }
+  };
+
+  const commentDisplay = (id) => {
+    document.querySelector(`.commentSection${id}`).classList.toggle("hidden")
+  }  
+
+</script>
+
+<%- include("partials/_footer") -%>

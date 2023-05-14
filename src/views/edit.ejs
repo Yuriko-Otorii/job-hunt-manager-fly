@@ -1,0 +1,174 @@
+<%- include("partials/_header") -%>
+<div class="container mx-auto px-8 sm:px-8">
+  <button type="button" onclick="pageBackConfirm()" 
+    ><i class="fa-solid fa-arrow-left mr-2 mt-8"></i>Back to detail</button
+  >
+  <form action="/home/<%= detailInfo.list_id %>/update?_method=PUT" Method="POST" class="w-full">
+    <div class="py-5">
+      <div class="flex justify-between items-center">
+          <div class="flex items-baseline header-left">
+              <span class="mr-2">Status: </span>
+              <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"></label>
+              <select id="countries" name="status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                <% if(detailInfo.status === "noResponse"){ %>
+                  <option selected value="noResponse">No response</option>
+                <% }else{ %>
+                  <option value="noResponse">No response</option>
+                <% } %>
+                <% if(detailInfo.status === "onProcess" ){ %>
+                  <option selected value="onProcess">On process</option>
+                <% }else{ %>
+                  <option value="onProcess">On process</option>
+                <% } %>
+                <% if(detailInfo.status === "offered" ){ %>
+                  <option selected value="offered">Offered</option>
+                <% }else{ %>
+                  <option value="offered">Offered</option>
+                <% } %>
+                <% if(detailInfo.status === "declined" ){ %>
+                  <option selected value="declined">Declined</option>
+                <% }else{ %>
+                  <option value="declined">Declined</option>
+                <% } %>
+
+              </select>
+          </div>
+          <button type="submit" class="animate-bounce rounded-lg px-4 py-2 bg-blue-500 text-white hover:bg-blue-600 duration-300">Save changes</button>
+      </div>
+
+      <div class="flex justify-center gap-3">
+        <div class="p-6 rounded-lg shadow-lg w-full h-fit my-5 bg-blue-100">
+          <h2
+            class="text-2xl font-bold mb-4 text-gray-800 underline underline-offset-4 decoration-1 decoration-gray-400"
+          >
+            Information
+          </h2>
+          
+          <div class="flex flex-col">
+            <div class="group relative w-full">
+              <label for="companyName" class="block pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400">Company name</label>
+              <input maxlength="50" id="companyName" name="companyName" value="<%= detailInfo.company_name %>" type="text" class="peer h-10 w-full rounded-md bg-gray-50 px-4 mb-2 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400" required/>
+            </div>
+            <div class="group relative w-full">
+              <label for="location" class="block pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400">Location</label>
+              <input maxlength="50" id="location" name="location" value="<%= detailInfo.location %>" type="text" class="peer h-10 w-full rounded-md bg-gray-50 px-4 mb-2 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400" />
+            </div>
+            <div class="group relative w-full">
+              <label for="companyEmail" class="block pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400">Company e-mail</label>
+              <input maxlength="50" id="companyEmail" name="companyEmail" value="<%= detailInfo.company_email %>" type="text" class="peer h-10 w-full rounded-md bg-gray-50 px-4 mb-2 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400" />
+            </div>
+            <div class="group relative w-full">
+              <label for="companyPhone" class="block pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400">Company phone</label>
+              <input maxlength="50" id="companyPhone" name="companyPhone" value="<%= detailInfo.company_phone %>" type="text" class="peer h-10 w-full rounded-md bg-gray-50 px-4 mb-2 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400" />
+            </div>
+            <div class="group relative w-full">
+              <label for="companyWebsite" class="block pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400">Website</label>
+              <input maxlength="100" id="companyWebsite" name="companyWebsite" value="<%= detailInfo.company_website %>" type="text" class="peer h-10 w-full rounded-md bg-gray-50 px-4 mb-2 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400" />
+            </div>
+          </div>
+          <div class="mt-6">
+            <div class="group relative w-full">
+              <label for="dateApplied" class="block pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400">Date applied</label>
+              <input datepicker datepicker-autohide datepicker-format="dd M yyyy"  id="dateApplied" name="dateApplied" value="<%= detailInfo.date_applied %>" type="text" class="peer h-10 w-full rounded-md bg-gray-50 px-4 mb-2 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400" required/>
+            </div>
+            <div class="group relative w-full">
+              <label for="jobType" class="block pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400">job type</label>
+              <input maxlength="50" id="jobType" name="jobType" value="<%= detailInfo.job_type %>" type="text" class="peer h-10 w-full rounded-md bg-gray-50 px-4 mb-2 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400" required/>
+            </div>
+            <div class="group relative w-full">
+              <label for="position" class="block pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400">Position</label>
+              <input maxlength="50" id="position" name="position" value="<%= detailInfo.position %>" type="text" class="peer h-10 w-full rounded-md bg-gray-50 px-4 mb-2 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400" required/>
+            </div>
+          </div>
+        </div>
+        <div class="p-6 rounded-lg shadow-lg w-full h-fit my-5 bg-blue-100">
+          <h2
+            class="text-2xl font-bold mb-10 text-gray-800 underline underline-offset-4 decoration-1 decoration-gray-400"
+          >
+            Next
+          </h2>
+          <div class="nextInputGroup">
+            <% detailInfo.next.next.forEach(item => { %>
+              <div class="group relative w-full" id="nextRow">
+                <div class="flex items-baseline">
+                  <input id="next" name="next" value="<%= item %>" type="text"class="peer h-10 w-full rounded-md bg-gray-50 px-4 mb-2 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400" />
+                  <button type="button" onclick="deleteRow()"> <i class="fa-solid fa-delete-left ml-2"></i></button>
+                </div>
+              </div>
+            <% }) %>
+          </div>
+          <button type="button" onclick="addNextRow()" class="rounded-lg px-3 py-1 border mt-2 border-gray-600 text-gray-600 hover:bg-gray-600 hover:text-gray-100 duration-300 rounded-full"><i class="fa-solid fa-plus mr-2"></i>Add a row</button>
+        </div>
+        <div class="p-6 rounded-lg shadow-lg w-full h-fit my-5 bg-blue-100">
+          <h2
+            class="text-2xl font-bold mb-10 text-gray-800 underline underline-offset-4 decoration-1 decoration-gray-400"
+          >
+            Notes
+          </h2>
+          <div class="notesInputGroup">
+            <% detailInfo.notes.notes.forEach(item => { %>
+              <div class="group relative w-full" id="notesRow">
+                <div class="flex items-baseline">
+                  <input id="notes" name="notes" value="<%= item %>" type="text" class="peer h-10 w-full rounded-md bg-gray-50 px-4 mb-2 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400" />
+                  <button type="button" onclick="deleteRow()"> <i class="fa-solid fa-delete-left ml-2"></i></button>
+                </div>
+              </div>            
+            <% }) %>
+          </div>
+          <button type="button" onclick="addNotesRow()" class="rounded-lg px-3 py-1 border mt-2 border-gray-600 text-gray-600 hover:bg-gray-600 hover:text-gray-100 duration-300 rounded-full"><i class="fa-solid fa-plus mr-2"></i>Add a row</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<script>
+  const addNextRow = () => {
+    const nextInputGroup = document.querySelector('.nextInputGroup')
+    const newNextInput = document.createElement('div')
+    newNextInput.innerHTML = `
+      <div class="group relative w-full" id="nextRow">
+        <div class="flex items-baseline">
+          <input id="next" name="next" type="text" class="peer h-10 w-full rounded-md bg-gray-50 px-4 mb-2 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400" />
+          <button type="button" onclick="deleteRow()"> <i class="fa-solid fa-delete-left ml-2"></i></button>
+        </div>
+      </div>
+    `
+    nextInputGroup.appendChild(newNextInput)
+  }
+  
+  const addNotesRow = () => {
+    const notesInputGroup = document.querySelector('.notesInputGroup')
+    const newNotesInput = document.createElement('div')
+    newNotesInput.innerHTML = `
+      <div class="group relative w-full" id="notesRow">
+        <div class="flex items-baseline">
+          <input id="notes" name="notes" type="text" class="peer h-10 w-full rounded-md bg-gray-50 px-4 mb-2 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400" />
+          <button type="button" onclick="deleteRow()"> <i class="fa-solid fa-delete-left ml-2"></i></button>
+        </div>
+      </div>
+    `
+    notesInputGroup.appendChild(newNotesInput)
+  }
+
+  const deleteRow = () => {
+    const target = event.target.parentElement.parentElement.parentElement
+    target.remove()
+  }
+
+  const pageBackConfirm = () => {
+    const result = window.confirm("Would you like to back to the detail page? (Changes will be discarded.)")
+    if(result){
+      window.location.href = '/home/<%= detailInfo.list_id %>'  
+    }else{
+      return false
+    }
+  }
+
+  const pageMoveAlert = (event) => {
+    
+  }
+
+</script>
+
+<%- include("partials/_footer") -%>
